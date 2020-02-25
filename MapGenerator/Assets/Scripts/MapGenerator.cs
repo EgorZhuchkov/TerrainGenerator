@@ -12,7 +12,9 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private float persistance;
     [SerializeField] private float lacunarity;
     [SerializeField] private Vector2 offset;
+    [SerializeField] private bool sharpPixels;
     [SerializeField] private bool autoUpdate;
+    [SerializeField] private TerrainType[] terrains;
     
     public bool AutoUpdate
     {
@@ -24,7 +26,14 @@ public class MapGenerator : MonoBehaviour
         float[,] noiseMap = Noise.GenerateNoiseMap(mapWidth, mapHeight, seed, noiseScale, octaves, persistance, lacunarity, offset);
 
         MapDisplayer mapDisplayer = FindObjectOfType<MapDisplayer>();
-        mapDisplayer.DrawNoiseMap(noiseMap, drawMode);
+        if(drawMode == DrawMode.ColorMap)
+        {
+            mapDisplayer.DrawNoiseMap(noiseMap, new ColorMapGenerator(terrains), sharpPixels);
+        }
+        else if(drawMode == DrawMode.NoiseMap)
+        {
+            mapDisplayer.DrawNoiseMap(noiseMap, new NoiseMapGenerator(), sharpPixels);
+        }
     }
 
     private void OnValidate()

@@ -1,9 +1,19 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [System.Serializable]
-public struct TerrainType
+public class TerrainType : IComparable
 {
     public string name;
-    public Vector2 minMaxHeight;
+    public float height;
     public Color color;
+
+    public int CompareTo(object o)
+    {
+        TerrainType p = o as TerrainType;
+        if (p != null)
+            return this.height.CompareTo(p.height);
+        else
+            throw new Exception("Невозможно сравнить два объекта");
+    }
 }
