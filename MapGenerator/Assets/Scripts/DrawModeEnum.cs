@@ -1,5 +1,6 @@
 ﻿public enum DrawMode
 {
     NoiseMap,
-    ColorMap
+    ColorMap,
+    Mesh
 }
